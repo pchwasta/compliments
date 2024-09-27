@@ -92,6 +92,7 @@ const compliments = [
 
 let lastIndex = -1;
 
+// Funkcja do losowania komplementu
 function getRandomCompliment() {
     let index;
     do {
@@ -99,6 +100,24 @@ function getRandomCompliment() {
     } while (index === lastIndex);
     lastIndex = index;
     document.getElementById("compliment-display").innerText = compliments[index];
+    updateCounter();
 }
+
+// Funkcja do aktualizacji licznika w LocalStorage
+function updateCounter() {
+    let counter = localStorage.getItem("complimentCounter");
+    counter = counter ? parseInt(counter) + 1 : 1;
+    localStorage.setItem("complimentCounter", counter);
+    document.getElementById("compliment-counter").innerText = counter;
+}
+
+// Funkcja do ustawienia wartości początkowej licznika
+function initializeCounter() {
+    let counter = localStorage.getItem("complimentCounter");
+    document.getElementById("compliment-counter").innerText = counter || 0;
+}
+
+// Zainicjuj licznik przy ładowaniu strony
+initializeCounter();
 
 document.getElementById("compliment-button").addEventListener("click", getRandomCompliment);
